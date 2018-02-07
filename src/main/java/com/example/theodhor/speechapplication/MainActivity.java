@@ -21,6 +21,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+//reading CSV imports
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+//openCSV imports
+import com.opencsv.CSVReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.File;
+
+
 public class MainActivity extends AppCompatActivity{
 
 
@@ -35,11 +48,49 @@ public class MainActivity extends AppCompatActivity{
     private static final String NAME = "name";
     private static final String AGE = "age";
     private static final String AS_NAME = "as_name";
+    //reading CSV
+    InputStream inputStream;
+    String[] data;
+    String[] line;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
+        //String fileName = "src/main/resources/disease.csv";
+        String csvFile = "C:/Users/Bassam/Desktop/Capstone/SpeechApplication-master/SpeechApplication-master/disease.csv";
+        String diseaseCSV = "c:/disease.csv";
+        CSVReader reader = null;
+        System.out.println("=================================================beginning=========================================================");
+        File file = new File("disease.csv");
+        System.out.println("Current working directory: " + file.getAbsolutePath());
+        System.setProperty("user.dir", "disease.csv");
+        System.out.println("New Current working directory: " + file.getAbsolutePath());
+        try {
+            //reader = new CSVReader(new FileReader(csvFile), ',','"', 1);
+
+            reader = new CSVReader(new FileReader("disease.csv"));
+
+
+            //String[] line;
+            while ((line = reader.readNext()) != null) {
+                System.out.println("Disease" + line[0] + ", number= " + line[1] + " , genes=" + line[2] + " , result=" + line[3] + "]");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("END----------------------------------------------------------END----------------------------------------------------------------END");
+
+        //inputStream = getResources().openRawResource(R.raw.Disease_results);
+        /*inputStream = getResources().openRawResource(R.raw.disease);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));*/
+
+
         preferences = getSharedPreferences(PREFS,0);
         editor = preferences.edit();
 
@@ -52,6 +103,28 @@ public class MainActivity extends AppCompatActivity{
             }
         });
         loadQuestions();
+
+
+        //reading CSV with comma as the separator
+        /*try {
+            String csvLine;
+            while ((csvLine = reader.readLine()) != null)
+            {
+
+                data=csvLine.split(",");
+                try{
+
+                    Log.e("result ",""+ data[4]) ;
+                    //Log.e("Data ",""+data[0]+""+data[1]+""+data[2]) ;
+
+                }catch (Exception e){
+                    Log.e("Problem",e.toString());
+                }
+            }
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Error in reading CSV file: "+ex);
+        }*/
 
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
@@ -191,6 +264,27 @@ public class MainActivity extends AppCompatActivity{
 
         if(text.contains("what is my name")){
             speak("Your name is "+preferences.getString(NAME,null));
+        }
+        //Answering the question regarding highlights
+        if(text.contains("highlights")) {
+            if (line[3].contentEquals("negative")) {
+                speak("Yes, one test came back negative!");
+            } else {
+                speak("You're all good!");
+            }
+            /*if (data[4].contentEquals("positive") || data[1].contentEquals("positive") || data[2].contentEquals("positive") || data[3].contentEquals("positive") || data[5].contentEquals("positive")) {
+                speak("Yes, one test came back positive!");
+            } else {
+                speak("You're all good!");
+            }*/
+            //Log.e("Result ",""+ data[4]) ;
+            //speak("You are "+preferences.getString(AGE,null)+" years old.");
+        }
+        if(text.contains("What is the summary of the report?")) {
+
+        }
+        if(text.contains("Give me a summary of the report")) {
+
         }
     }
 }
