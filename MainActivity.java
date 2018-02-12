@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Parcelable;
 import android.provider.AlarmClock;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
@@ -14,73 +13,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.DataSample;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
+import java.io.*;
 
 public class MainActivity extends AppCompatActivity{
 
 
-        private ListView listView;
-        private com.javapapers.android.csvfileread.app.ItemArrayAdapter itemArrayAdapter;
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            listView = (ListView) findViewById(R.id.listView);
-            itemArrayAdapter = new com.javapapers.android.csvfileread.app.ItemArrayAdapter(getApplicationContext(), R.layout.item_layout);
-
-            Parcelable state = listView.onSaveInstanceState();
-            listView.setAdapter(itemArrayAdapter);
-            listView.onRestoreInstanceState(state);
-
-            InputStream inputStream = getResources().openRawResource(R.raw.stats);
-            CSVFile csvFile = new CSVFile(inputStream);
-            List scoreList = csvFile.read();
-
-            for(String[] scoreData:scoreList ) {
-                itemArrayAdapter.add(scoreData);
-            }
-        }
-    private List<DataSample> dataSamples= new ArrayList<>();
-    private void readCSVData() throws IOException {
-        DataSample sample;
-        InputStream is = getResources().openRawResource(R.raw.diseaseresults);
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(is, Charset.forName("UTP-8"))
-        );
-        String line;
-        try {
-            while ((line = reader.readLine()) != null) {
-                String[] tokens = line.split(",");
-                DataSample sample = new DataSample();
-                sample.setDisease(tokens[0]);
-                sample.setGenes_tested(tokens[1]);
-                sample.setResult(tokens[2]);
-                sample.setTag(tokens[3]);
-                dataSamples.add(sample);
-                Log.d("MyActivity", "Just created: " + sample);
-            }
-        }
-
-    }
-
     private TextToSpeech tts;
     private ArrayList<String> questions;
     private String name, surname, age, asName;
+    private String[] names = new String[118];
+    private String[] results = new String[118];
+    private String[] tags1 = new String[118];
+    private String[] tags2= new String[118];
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private static final String PREFS = "prefs";
@@ -95,6 +46,26 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         preferences = getSharedPreferences(PREFS,0);
         editor = preferences.edit();
+
+
+
+        /*try {
+            DataInputStream file = new DataInputStream(getAssets().open("Disease_results.csv"));
+            Scanner input = new Scanner(file);
+            //PrintStream output = new PrintStream(System.out);
+            PrintStream output = new PrintStream(new File("Cleaned_Data.csv"));
+            cleanData(input, output);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+        try {
+            DataInputStream file = new DataInputStream(getAssets().open("Cleaned_Data.csv"));
+            Scanner input = new Scanner(file);
+            split(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         findViewById(R.id.microphoneButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +91,37 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+    private void cleanData(Scanner input, PrintStream output) {
+        while (input.hasNextLine()) {
+            String line = input.nextLine();
+            String cleanLine = "";
+            cleanLine = line.replaceAll("\'", "");
+            cleanLine = cleanLine.replaceAll("-", " ");
+            cleanLine = cleanLine.replaceAll("/", " or ");
+            if (cleanLine.contains("?")) {
+                if (cleanLine.contains("Wolfram")) {
+                    cleanLine = cleanLine.replaceAll("\\?", " ");
+                } else if (cleanLine.contains("poprotein")) {
+                    cleanLine = cleanLine.replaceAll("\\?", "beta ");
+                }
+            }
+            output.println(cleanLine);
+        }
+    }
+
+    private void split(Scanner input) {
+        int index = 0;
+        while(input.hasNextLine()) {
+            String line = input.nextLine();
+            String[] cells = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+            names[index] = cells[0];
+            results[index] = cells[3];
+            tags1[index] = cells[4];
+            tags2[index] = cells[5];
+            index++;
+        }
     }
 
     private void loadQuestions(){
@@ -174,7 +176,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    private void recognition(String text){
+    private void recognition(String text) {
         Log.e("Speech",""+text);
         String[] speech = text.split(" ");
         if(text.contains("hello")){
@@ -240,6 +242,22 @@ public class MainActivity extends AppCompatActivity{
 
         if(text.contains("what is my name")){
             speak("Your name is "+preferences.getString(NAME,null));
+        }
+
+        if(text.contains("condition") || text.contains("disease")) {
+            String symptom = speech[speech.length-2];
+            int disease = 0;
+            for(int i = 0; i < tags2.length; i++) {
+                if(tags2[i].toLowerCase().contains(symptom)) {
+                    if(!results[i].equalsIgnoreCase("negative")) {
+                        disease++;
+                        speak("You are a " + results[i] + " of " + speech[speech.length-2] + speech[speech.length-1]);
+                    }
+                }
+            }
+            if (disease == 0) {
+                speak("You do not have any " + speech[speech.length-2] + speech[speech.length-1]);
+            }
         }
     }
 }
