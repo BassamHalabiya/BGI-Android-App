@@ -251,7 +251,12 @@ public class MainActivity extends AppCompatActivity{
                 if(tags2[i].toLowerCase().contains(symptom)) {
                     if(!results[i].equalsIgnoreCase("negative")) {
                         disease++;
-                        speak("You are a " + results[i] + " of " + speech[speech.length-2] + speech[speech.length-1]);
+                        speak("You are a " + results[i] + " of " + names[i]);
+                        try{
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
