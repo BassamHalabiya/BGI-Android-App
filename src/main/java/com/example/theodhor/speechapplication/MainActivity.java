@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Scanner;
+import java.io.*;
 
 //reading CSV imports
 import java.io.BufferedReader;
@@ -48,10 +50,15 @@ public class MainActivity extends AppCompatActivity{
     private static final String NAME = "name";
     private static final String AGE = "age";
     private static final String AS_NAME = "as_name";
+    private String[] names = new String[118];
+    private String[] results = new String[118];
+    private String[] tags1 = new String[118];
+    private String[] tags2= new String[118];
+
     //reading CSV
-    InputStream inputStream;
-    String[] data;
-    String[] line;
+    //InputStream inputStream;
+    //String[] data;
+    //String[] line;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +68,7 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-
+        /*
         //String fileName = "src/main/resources/disease.csv";
         String csvFile = "C:/Users/Bassam/Desktop/Capstone/SpeechApplication-master/SpeechApplication-master/disease.csv";
         String diseaseCSV = "c:/disease.csv";
@@ -85,10 +92,31 @@ public class MainActivity extends AppCompatActivity{
             e.printStackTrace();
         }
         System.out.println("END----------------------------------------------------------END----------------------------------------------------------------END");
+        */
 
         //inputStream = getResources().openRawResource(R.raw.Disease_results);
         /*inputStream = getResources().openRawResource(R.raw.disease);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));*/
+
+        /*try {
+            DataInputStream file = new DataInputStream(getAssets().open("Disease_results.csv"));
+            Scanner input = new Scanner(file);
+            //PrintStream output = new PrintStream(System.out);
+            PrintStream output = new PrintStream(new File("Cleaned_Data.csv"));
+            cleanData(input, output);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+
+
+        try {
+            DataInputStream file2 = new DataInputStream(getAssets().open("Disease_results.csv"));
+            Scanner input = new Scanner(file2);
+            split(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         preferences = getSharedPreferences(PREFS,0);
@@ -143,6 +171,46 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+    private void cleanData(Scanner input, PrintStream output) {
+        while (input.hasNextLine()) {
+            String line = input.nextLine();
+            String cleanLine = "";
+            cleanLine = line.replaceAll("\'", "");
+            cleanLine = cleanLine.replaceAll("-", " ");
+            cleanLine = cleanLine.replaceAll("/", " or ");
+            if (cleanLine.contains("?")) {
+                if (cleanLine.contains("Wolfram")) {
+                    cleanLine = cleanLine.replaceAll("\\?", " ");
+                } else if (cleanLine.contains("poprotein")) {
+                    cleanLine = cleanLine.replaceAll("\\?", "beta ");
+                }
+            }
+            output.println(cleanLine);
+        }
+    }
+
+    private void split(Scanner input) {
+        int index = 0;
+/*        String[] firstLine = input.nextLine().split(",");
+        for (int i  = 0; i < firstLine.length - 1; i++) {
+            for (int j  = 0; j < firstLine.length - 1; j++) {
+                if( firstLine[j].contains("disease")){
+                    names[index] = cells[j];
+                }
+            }
+            if ()
+        }*/
+        while(input.hasNextLine()) {
+            String line = input.nextLine();
+            String[] cells = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+            names[index] = cells[0];
+            results[index] = cells[3];
+            tags1[index] = cells[4];
+            tags2[index] = cells[5];
+            index++;
+        }
     }
 
     private void loadQuestions(){
@@ -266,25 +334,87 @@ public class MainActivity extends AppCompatActivity{
             speak("Your name is "+preferences.getString(NAME,null));
         }
         //Answering the question regarding highlights
-        if(text.contains("highlights")) {
+
+        /*if(text.contains("highlights")) {
+
             if (line[3].contentEquals("negative")) {
                 speak("Yes, one test came back negative!");
             } else {
                 speak("You're all good!");
             }
-            /*if (data[4].contentEquals("positive") || data[1].contentEquals("positive") || data[2].contentEquals("positive") || data[3].contentEquals("positive") || data[5].contentEquals("positive")) {
-                speak("Yes, one test came back positive!");
-            } else {
-                speak("You're all good!");
-            }*/
+            //if (data[4].contentEquals("positive") || data[1].contentEquals("positive") || data[2].contentEquals("positive") || data[3].contentEquals("positive") || data[5].contentEquals("positive")) {
+            //    speak("Yes, one test came back positive!");
+            //} else {
+            //    speak("You're all good!");
+            //}
+
             //Log.e("Result ",""+ data[4]) ;
             //speak("You are "+preferences.getString(AGE,null)+" years old.");
         }
-        if(text.contains("What is the summary of the report?")) {
+        */
 
-        }
-        if(text.contains("Give me a summary of the report")) {
+        if(text.contains("highlights") || text.contains("summary")) {
+            int disease = 0;
+            for (int i = 1; i < results.length; i++) {
+                if(!results[i].equalsIgnoreCase("negative")) {
+                    disease++;
+                    speak("You are " + results[i] + " for " + names[i]);
+                    try{
+                        Thread.sleep(5500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            System.out.println("-----------------------Number of diseases: " + disease);
+            if (disease == 0) {
+                speak("Congratulations! Your test results came back negative for all diseases");
+            } else {
+                speak("This is the end of your report summary!");
 
+            }
         }
+
+        if(text.contains("condition") || text.contains("disease")) {
+            String symptom = speech[speech.length-2];
+            int disease = 0;
+            for(int i = 0; i < tags2.length; i++) {
+                if(tags2[i].toLowerCase().contains(symptom)) {
+                    if(!results[i].equalsIgnoreCase("negative")) {
+                        disease++;
+                        speak("You are a " + results[i] + " of " + names[i]);
+                        try{
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            if (disease == 0) {
+                speak("You do not have any " + speech[speech.length-2] + speech[speech.length-1]);
+            }
+        }
+
+        if(text.contains("cancer") || text.contains("do I have a risk for cancer")){
+            int cancer = 0;
+            for(int i = 0; i < results.length; i++) {
+                if (tags1[i].toLowerCase().contains("cancer") && !results[i].equalsIgnoreCase("negative")) {
+                    cancer++;
+                    speak("You are a " + results[i] + "of " + names[i]);
+                    try {
+                        Thread.sleep(5000);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+            if(cancer == 0){
+                speak("You are not a pathogenic carrier of any types of cancer on the list");
+            }
+        }
+
     }
 }
