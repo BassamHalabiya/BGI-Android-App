@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.AlarmClock;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.content.Context;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,22 +48,26 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         preferences = getSharedPreferences(PREFS,0);
         editor = preferences.edit();
+        Context context = this;
 
 
-
-        /*try {
-            DataInputStream file = new DataInputStream(getAssets().open("Disease_results.csv"));
-            Scanner input = new Scanner(file);
-            //PrintStream output = new PrintStream(System.out);
-            PrintStream output = new PrintStream(new File("Cleaned_Data.csv"));
+        try {
+            //File file = new File(Environment.getExternalStorageDirectory()+ "/Disease_results.csv");
+            //File file = new File(Environment.getDataDirectory()+ "/Disease_results.csv");
+            InputStream fis = getAssets().open("Disease_results.csv");
+            //FileInputStream fis =context.openFileInput(file);
+            //FileInputStream fis =new FileInputStream(file);
+            BufferedReader input = new BufferedReader(new InputStreamReader(fis));
+            //PrintStream output = new PrintStream(new File("Cleaned_Data.csv"));
+            FileOutputStream output = openFileOutput("Cleaned_Data.csv", Context.MODE_PRIVATE);
             cleanData(input, output);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
         try {
-            DataInputStream file = new DataInputStream(getAssets().open("Cleaned_Data.csv"));
-            Scanner input = new Scanner(file);
+            FileInputStream fis = context.openFileInput("Cleaned_Data.csv");
+            BufferedReader input = new BufferedReader(new InputStreamReader(fis));
             split(input);
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,9 +99,9 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    private void cleanData(Scanner input, PrintStream output) {
-        while (input.hasNextLine()) {
-            String line = input.nextLine();
+    private void cleanData(BufferedReader input, FileOutputStream output) throws IOException {
+        String line = input.readLine();
+        while (line != null) {
             String cleanLine = "";
             cleanLine = line.replaceAll("\'", "");
             cleanLine = cleanLine.replaceAll("-", " ");
@@ -107,20 +113,22 @@ public class MainActivity extends AppCompatActivity{
                     cleanLine = cleanLine.replaceAll("\\?", "beta ");
                 }
             }
-            output.println(cleanLine);
+            output.write((cleanLine+"\n").getBytes());
+            line = input.readLine();
         }
     }
 
-    private void split(Scanner input) {
+    private void split(BufferedReader input) throws IOException {
         int index = 0;
-        while(input.hasNextLine()) {
-            String line = input.nextLine();
+        String line = input.readLine();
+        while(line != null) {
             String[] cells = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
             names[index] = cells[0];
             results[index] = cells[3];
             tags1[index] = cells[4];
             tags2[index] = cells[5];
             index++;
+            line = input.readLine();
         }
     }
 
@@ -244,6 +252,28 @@ public class MainActivity extends AppCompatActivity{
             speak("Your name is "+preferences.getString(NAME,null));
         }
 
+        if(text.contains("highlights") || text.contains("summary")) {
+            int disease = 0;
+            for (int i = 1; i < results.length; i++) {
+                if(!results[i].equalsIgnoreCase("negative")) {
+                    disease++;
+                    speak("You are " + results[i] + " for " + names[i]);
+                    try{
+                        Thread.sleep(5500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            System.out.println("-----------------------Number of diseases: " + disease);
+            if (disease == 0) {
+                speak("Congratulations! Your test results came back negative for all diseases");
+            } else {
+                speak("This is the end of your report summary!");
+
+            }
+        }
+
         if(text.contains("condition") || text.contains("disease")) {
             String symptom = speech[speech.length-2];
             int disease = 0;
@@ -263,6 +293,26 @@ public class MainActivity extends AppCompatActivity{
             if (disease == 0) {
                 speak("You do not have any " + speech[speech.length-2] + speech[speech.length-1]);
             }
+        } else if(text.contains("risk") || text.startsWith("do I have")){
+            int disease = 0;
+            String symptom = speech[speech.length-1];
+            for(int i = 0; i < results.length; i++) {
+                if (tags1[i].toLowerCase().contains(symptom) && !results[i].equalsIgnoreCase("negative")) {
+                    disease++;
+                    speak("You are a " + results[i] + "of " + names[i]);
+                    try {
+                        Thread.sleep(5000);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+            if(disease == 0){
+                speak("You do not have any potential for" + speech[speech.length-1]);
+            }
         }
+
     }
 }
