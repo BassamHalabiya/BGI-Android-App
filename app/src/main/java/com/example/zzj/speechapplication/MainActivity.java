@@ -1,4 +1,4 @@
-package com.example.theodhor.speechapplication;
+package com.example.zzj.speechapplication;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.provider.AlarmClock;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,16 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import android.content.Context;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveContents;
+import com.google.android.gms.drive.DriveFile;
+import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.DriveResourceClient;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,8 +35,9 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
 
-public class MainActivity extends AppCompatActivity{
+//import static com.google.android.gms.drive.DriveId.decodeFromString;
 
+public class MainActivity extends AppCompatActivity{
 
     private TextToSpeech tts;
     private ArrayList<String> questions;
@@ -41,6 +53,7 @@ public class MainActivity extends AppCompatActivity{
     private static final String NAME = "name";
     private static final String AGE = "age";
     private static final String AS_NAME = "as_name";
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +62,56 @@ public class MainActivity extends AppCompatActivity{
         preferences = getSharedPreferences(PREFS,0);
         editor = preferences.edit();
         Context context = this;
+        final GoogleSignInAccount account = getIntent().getParcelableExtra("ACCOUNT");
+        final DriveId driveId = getIntent().getParcelableExtra("DriveId");
+        //String fileId = "1WMHSgXIz6TVCr9rZqG96GeD73STJy4Nl";
+        //String fileId = "Disease_results.csv";
+        //DriveId driveId = DriveId.decodeFromString(fileId);
+        //final DriveResourceClient client = Drive.getDriveResourceClient(getApplicationContext(), account);
+        /*Task<DriveContents> openFileTask =
+                client.openFile(driveId.asDriveFile(), DriveFile.MODE_READ_ONLY);
 
+        // [START read_contents]
+        openFileTask
+                .continueWithTask(new Continuation<DriveContents, Task<Void>>() {
+                    @Override
+                    public Task<Void> then(@NonNull Task<DriveContents> task) throws Exception {
+                        DriveContents contents = task.getResult();
+                        // Process contents...
+                        // [START_EXCLUDE]
+                        // [START read_as_string]
+                        try {
+                            BufferedReader input = new BufferedReader(
+                                    new InputStreamReader(contents.getInputStream()));
+                            FileOutputStream output = openFileOutput("Cleaned_Data.csv", Context.MODE_PRIVATE);
+                            cleanData(input, output);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        // [END read_as_string]
+                        // [START discard_contents]
+                        Task<Void> discardTask = client.discardContents(contents);
+                        // [END discard_contents]
+                        return discardTask;
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        // [START_EXCLUDE]
+                        Log.e(TAG, "Unable to read contents", e);
+                        finish();
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END read_contents]*/
 
         try {
             //File file = new File(Environment.getExternalStorageDirectory()+ "/Disease_results.csv");
             //File file = new File(Environment.getDataDirectory()+ "/Disease_results.csv");
-            InputStream fis = getAssets().open("Disease_results.csv");
-            //FileInputStream fis =context.openFileInput(file);
-            //FileInputStream fis =new FileInputStream(file);
+            //InputStream fis = getAssets().open("Disease_results.csv");
+            FileInputStream fis =context.openFileInput("Disease_results.csv");
             BufferedReader input = new BufferedReader(new InputStreamReader(fis));
             //PrintStream output = new PrintStream(new File("Cleaned_Data.csv"));
             FileOutputStream output = openFileOutput("Cleaned_Data.csv", Context.MODE_PRIVATE);
@@ -113,6 +168,7 @@ public class MainActivity extends AppCompatActivity{
                     cleanLine = cleanLine.replaceAll("\\?", "beta ");
                 }
             }
+            Log.e(TAG, cleanLine);
             output.write((cleanLine+"\n").getBytes());
             line = input.readLine();
         }

@@ -7,6 +7,7 @@ package com.example.zzj.speechapplication;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResourceClient;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataBuffer;
+import com.google.android.gms.drive.OpenFileActivityOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,6 +42,7 @@ import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.MetadataChangeSet;
+import com.google.android.gms.tasks.TaskCompletionSource;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -54,13 +57,16 @@ public class Login extends AppCompatActivity{
     private static EditText password;
     private static Button login_button;
     private static GoogleSignInClient mGoogleSignInClient;
-    private static int RC_SIGN_IN = 100;
+    protected static int RC_SIGN_IN = 100;
+    protected static final int REQUEST_CODE_OPEN_ITEM = 1;
     private static final String TAG = "Login";
     protected DriveClient mDriveClient;
     protected DriveResourceClient mDriveResourceClient;
     protected DriveId mDriveId;
     protected BufferedReader reader;
     protected Intent mainIntent;
+    private TaskCompletionSource<DriveId> mOpenItemTaskSource;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,20 +151,88 @@ public class Login extends AppCompatActivity{
     private void updateUI(GoogleSignInAccount account) {
         final Context context = this;
         if (account != null) {
+            /*pickTextFile().addOnSuccessListener(this,
+                    new OnSuccessListener<DriveId>() {
+                        @Override
+                        public void onSuccess(DriveId driveId) {
+                            Task<DriveContents> openFileTask =
+                                    mDriveResourceClient.openFile(mDriveId.asDriveFile(), DriveFile.MODE_READ_ONLY);
+                            // [START read_contents]
+                            Log.e(TAG, "File ID: " + driveId.encodeToString());
+                            openFileTask
+                                    .continueWithTask(new Continuation<DriveContents, Task<Void>>() {
+                                        @Override
+                                        public Task<Void> then(@NonNull Task<DriveContents> task) throws Exception {
+                                            DriveContents contents = task.getResult();
+                                            // Process contents...
+                                            // [START_EXCLUDE]
+                                            // [START read_as_string]
+                                            try {
+                                                BufferedReader input = new BufferedReader(
+                                                        new InputStreamReader(contents.getInputStream()));
+                                                StringBuilder data = new StringBuilder();
+                                                String line;
+                                                Log.e(TAG, "Reading files...");
+                                                while ((line = input.readLine()) != null) {
+                                                    data.append(line).append('\n');
+                                                }
+
+                                                try {
+                                                    FileOutputStream output = openFileOutput("Disease_results.csv", Context.MODE_PRIVATE);
+                                                    OutputStreamWriter writer = new OutputStreamWriter(output);
+                                                    writer.write(data.toString());
+                                                    writer.close();
+                                                } catch (IOException e) {
+                                                    Log.e(TAG, "Failed to download file.");
+                                                }
+
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                            // [END read_as_string]
+                                            // [START discard_contents]
+                                            Task<Void> discardTask = mDriveResourceClient.discardContents(contents);
+                                            // [END discard_contents]
+                                            return discardTask;
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Handle failure
+                                            // [START_EXCLUDE]
+                                            Log.e(TAG, "Unable to read contents", e);
+                                            finish();
+                                            // [END_EXCLUDE]
+                                        }
+                                    });
+                            // [END read_contents]
+                        }
+                    })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "No file selected", e);
+                        finish();
+                    }
+            });*/
+
             Query query = new Query.Builder().addFilter(Filters.contains(SearchableField.TITLE, "Disease_results"))
                     .build();
-            final Task<MetadataBuffer> queryTask = mDriveResourceClient.query(query);
+            Log.e(TAG, "Checking if this query has anything ----> " + query.toString());
+            Task<MetadataBuffer> queryTask = mDriveResourceClient.query(query);
+            Log.e(TAG, "Check query contents " + query.describeContents());
             queryTask
                     .addOnSuccessListener(this, new OnSuccessListener<MetadataBuffer>() {
                                 @Override
                                 public void onSuccess(MetadataBuffer metadataBuffer) {
                                     // Handle results...
-                                    Metadata metadata = metadataBuffer.get(0);
-                                    mDriveId = metadata.getDriveId();
-                                    //mainIntent.putExtra("DriveId", mDriveId);
+                                    //Metadata metadata = metadataBuffer.get(0);
+                                    Log.e(TAG, "Number of metadata " + metadataBuffer.getCount());
+                                    mDriveId = metadataBuffer.get(0).getDriveId();
                                     Task<DriveContents> openFileTask =
                                             mDriveResourceClient.openFile(mDriveId.asDriveFile(), DriveFile.MODE_READ_ONLY);
-
+                                    Log.e(TAG, "File ID: " + mDriveId.encodeToString());
                                     // [START read_contents]
                                     openFileTask
                                             .continueWithTask(new Continuation<DriveContents, Task<Void>>() {
@@ -222,11 +296,45 @@ public class Login extends AppCompatActivity{
         }
     }
 
+    /**
+     * Prompts the user to select a text file using OpenFileActivity.
+     *
+     * @return Task that resolves with the selected item's ID.
+     */
+    protected Task<DriveId> pickTextFile() {
+        OpenFileActivityOptions openOptions =
+                new OpenFileActivityOptions.Builder()
+                        .setSelectionFilter(Filters.eq(SearchableField.MIME_TYPE, "text/csv"))
+                        .setActivityTitle(getString(R.string.select_file))
+                        .build();
+        return pickItem(openOptions);
+    }
+
+    /**
+     * Prompts the user to select a folder using OpenFileActivity.
+     *
+     * @param openOptions Filter that should be applied to the selection
+     * @return Task that resolves with the selected item's ID.
+     */
+    private Task<DriveId> pickItem(OpenFileActivityOptions openOptions) {
+        mOpenItemTaskSource = new TaskCompletionSource<>();
+        mDriveClient.newOpenFileActivityIntentSender(openOptions)
+                .continueWith(new Continuation<IntentSender, Void>() {
+                    @Override
+                    public Void then(@NonNull Task<IntentSender> task) throws Exception {
+                        startIntentSenderForResult(
+                                task.getResult(), REQUEST_CODE_OPEN_ITEM, null, 0, 0, 0);
+                        return null;
+                    }
+                });
+        return mOpenItemTaskSource.getTask();
+    }
+
+
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         signOut();
-        super.onPause();
     }
 
     private void signOut() {

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SpeechApplication</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_text">Login Page</string>
+    <string name="username_text">Username</string>
+    <string name="password_text">Password</string>
+    <string name="button_login_text">Login</string>
+    <string name="or_text">OR</string>
+    <string name="select_file">Select file</string>
+</resources>
