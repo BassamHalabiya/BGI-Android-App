@@ -230,6 +230,15 @@ public class Login extends AppCompatActivity{
                                     //Metadata metadata = metadataBuffer.get(0);
                                     Log.e(TAG, "Number of metadata " + metadataBuffer.getCount());
                                     mDriveId = metadataBuffer.get(0).getDriveId();
+
+                                    /*try {
+                                        FileOutputStream output = openFileOutput("Disease_results.csv", Context.MODE_PRIVATE);
+                                        driveService.files().get(mDriveId.encodeToString())
+                                                .executeMediaAndDownloadTo(output);
+                                    } catch (IOException e) {
+                                        Log.e(TAG, "Failed to download file.");
+                                    }*/
+
                                     Task<DriveContents> openFileTask =
                                             mDriveResourceClient.openFile(mDriveId.asDriveFile(), DriveFile.MODE_READ_ONLY);
                                     Log.e(TAG, "File ID: " + mDriveId.encodeToString());
