@@ -4,7 +4,13 @@
     <string name="login_text">Login Page</string>
     <string name="username_text">Username</string>
     <string name="password_text">Password</string>
-    <string name="button_login_text">Login</string>
-    <string name="or_text">OR</string>
+    <string name="button_login_text">Log In</string>
+    <string name="or_text">or</string>
     <string name="select_file">Select file</string>
+    <string name="menu_text">MAIN MENU</string>
+    <string name="button_report_text">REPORT</string>
+    <string name="button_order_text">ORDER</string>
+    <string name="button_health_text">HEALTH TIPS</string>
+    <string name="button_mic_text">Type a question..or press to ask</string>
+    <string name="title_activity_report">Report</string>
 </resources>

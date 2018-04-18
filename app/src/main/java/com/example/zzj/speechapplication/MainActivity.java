@@ -35,8 +35,6 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
 
-//import static com.google.android.gms.drive.DriveId.decodeFromString;
-
 public class MainActivity extends AppCompatActivity{
 
     private TextToSpeech tts;
@@ -64,7 +62,6 @@ public class MainActivity extends AppCompatActivity{
         Context context = this;
         final GoogleSignInAccount account = getIntent().getParcelableExtra("ACCOUNT");
         final DriveId driveId = getIntent().getParcelableExtra("DriveId");
-        //String fileId = "1WMHSgXIz6TVCr9rZqG96GeD73STJy4Nl";
         //String fileId = "Disease_results.csv";
         //DriveId driveId = DriveId.decodeFromString(fileId);
         //final DriveResourceClient client = Drive.getDriveResourceClient(getApplicationContext(), account);

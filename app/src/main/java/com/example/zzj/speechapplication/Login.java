@@ -65,6 +65,7 @@ public class Login extends AppCompatActivity{
     protected DriveId mDriveId;
     protected BufferedReader reader;
     protected Intent mainIntent;
+    protected Intent menuIntent;
     private TaskCompletionSource<DriveId> mOpenItemTaskSource;
 
 
@@ -73,6 +74,7 @@ public class Login extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mainIntent = new Intent("com.example.zzj.speechapplication.MainActivity");
+        menuIntent = new Intent("com.example.zzj.speechapplication.MainMenu");
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -95,7 +97,7 @@ public class Login extends AppCompatActivity{
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(mainIntent);
+                        startActivity(menuIntent);
                     }
                 }
         );
@@ -301,7 +303,7 @@ public class Login extends AppCompatActivity{
                         }
                     });
             mainIntent.putExtra("ACCOUNT", account);
-            startActivity(mainIntent);
+            startActivity(menuIntent);
         }
     }
 
