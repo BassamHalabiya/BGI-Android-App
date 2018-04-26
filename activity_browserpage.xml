@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/amazonbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amazon"
+        android:onClick="amazon"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="77dp" />
+
+    <Button
+        android:id="@+id/BGIbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BGI"
+        android:onClick="bgibutton"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="258dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="300dp"
+        android:layout_height="116dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="140dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="297dp"
+        android:layout_height="130dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="334dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="312dp"
+        android:layout_height="46dp"
+        android:text="Order Page"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="16dp" />
+</android.support.constraint.ConstraintLayout>
