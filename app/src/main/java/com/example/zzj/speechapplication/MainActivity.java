@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity{
         editor = preferences.edit();
         Context context = this;
         final GoogleSignInAccount account = getIntent().getParcelableExtra("ACCOUNT");
-        final DriveId driveId = getIntent().getParcelableExtra("DriveId");
         //String fileId = "Disease_results.csv";
         //DriveId driveId = DriveId.decodeFromString(fileId);
         //final DriveResourceClient client = Drive.getDriveResourceClient(getApplicationContext(), account);

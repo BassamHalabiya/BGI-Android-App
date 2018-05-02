@@ -28,6 +28,8 @@ import android.widget.GridView;
 
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,22 +41,24 @@ import java.text.DecimalFormat;
 
 public class MainMenu extends AppCompatActivity{
     protected Intent mainIntent;
+    protected Intent reportIntent;
     GridLayout mainGrid;
     Button button_report;
     Button button_question;
-    private static final int MY_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        reportIntent = new Intent("com.example.zzj.speechapplication.Report");
         mainIntent = new Intent("com.example.zzj.speechapplication.MainActivity");
         button_report = (Button) findViewById(R.id.reportbutton);
-
         button_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //reportpage();
+                GoogleSignInAccount account = getIntent().getParcelableExtra("ACCOUNT");
+                reportIntent.putExtra("ACCOUNT", account);
+                startActivity(reportIntent);
             }
         });
 

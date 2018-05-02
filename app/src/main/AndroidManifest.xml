@@ -19,11 +19,28 @@
                 <action android:name="com.google.android.gms.drive.events.HANDLE_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".Login">
+        <activity
+            android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Processing">
+            <intent-filter>
+                <action android:name="com.example.zzj.speechapplication.Processing" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".Login">
+            <intent-filter>
+                <action android:name="com.example.zzj.speechapplication.Login" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -36,11 +53,18 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="com.example.zzj.speechapplication.MainActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Report"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <intent-filter>
+                <action android:name="com.example.zzj.speechapplication.Report" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

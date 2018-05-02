@@ -27,7 +27,6 @@ import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveClient;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResourceClient;
-import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataBuffer;
 import com.google.android.gms.drive.OpenFileActivityOptions;
 import com.google.android.gms.tasks.Continuation;
@@ -49,6 +48,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.File;
 
 @SuppressLint("Registered")
 public class Login extends AppCompatActivity{
@@ -65,7 +65,7 @@ public class Login extends AppCompatActivity{
     protected DriveId mDriveId;
     protected BufferedReader reader;
     protected Intent mainIntent;
-    protected Intent menuIntent;
+    protected Intent ProcessIntent;
     private TaskCompletionSource<DriveId> mOpenItemTaskSource;
 
 
@@ -74,7 +74,8 @@ public class Login extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mainIntent = new Intent("com.example.zzj.speechapplication.MainActivity");
-        menuIntent = new Intent("com.example.zzj.speechapplication.MainMenu");
+        //ProcessIntent = new Intent(Login.this, Processing.class);
+        ProcessIntent = new Intent("com.example.zzj.speechapplication.Processing");
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -97,7 +98,7 @@ public class Login extends AppCompatActivity{
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(menuIntent);
+                        startActivity(ProcessIntent);
                     }
                 }
         );
@@ -138,6 +139,7 @@ public class Login extends AppCompatActivity{
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            Log.e(TAG, "Account: " + account.toString());
             // Signed in successfully, show authenticated UI.
             mDriveClient = Drive.getDriveClient(getApplicationContext(), account);
             mDriveResourceClient = Drive.getDriveResourceClient(getApplicationContext(), account);
@@ -218,92 +220,91 @@ public class Login extends AppCompatActivity{
                         finish();
                     }
             });*/
+            File file = new File("Disease_results.csv");
+            if (!file.exists()) {
+                Query query = new Query.Builder().addFilter(Filters.contains(SearchableField.TITLE, "Disease_results"))
+                        .build();
+                Task<MetadataBuffer> queryTask = mDriveResourceClient.query(query);
+                Log.e(TAG, "Check query contents " + query.describeContents());
+                queryTask
+                        .addOnSuccessListener(this, new OnSuccessListener<MetadataBuffer>() {
+                            @Override
+                            public void onSuccess(MetadataBuffer metadataBuffer) {
+                                // Handle results...
+                                Log.e(TAG, "Number of metadata " + metadataBuffer.getCount());
+                                mDriveId = metadataBuffer.get(0).getDriveId();
+                                        /*try {
+                                            FileOutputStream output = openFileOutput("Disease_results.csv", Context.MODE_PRIVATE);
+                                            driveService.files().get(mDriveId.encodeToString())
+                                                    .executeMediaAndDownloadTo(output);
+                                        } catch (IOException e) {
+                                            Log.e(TAG, "Failed to download file.");
+                                        }*/
 
-            Query query = new Query.Builder().addFilter(Filters.contains(SearchableField.TITLE, "Disease_results"))
-                    .build();
-            Log.e(TAG, "Checking if this query has anything ----> " + query.toString());
-            Task<MetadataBuffer> queryTask = mDriveResourceClient.query(query);
-            Log.e(TAG, "Check query contents " + query.describeContents());
-            queryTask
-                    .addOnSuccessListener(this, new OnSuccessListener<MetadataBuffer>() {
-                                @Override
-                                public void onSuccess(MetadataBuffer metadataBuffer) {
-                                    // Handle results...
-                                    //Metadata metadata = metadataBuffer.get(0);
-                                    Log.e(TAG, "Number of metadata " + metadataBuffer.getCount());
-                                    mDriveId = metadataBuffer.get(0).getDriveId();
-
-                                    /*try {
-                                        FileOutputStream output = openFileOutput("Disease_results.csv", Context.MODE_PRIVATE);
-                                        driveService.files().get(mDriveId.encodeToString())
-                                                .executeMediaAndDownloadTo(output);
-                                    } catch (IOException e) {
-                                        Log.e(TAG, "Failed to download file.");
-                                    }*/
-
-                                    Task<DriveContents> openFileTask =
-                                            mDriveResourceClient.openFile(mDriveId.asDriveFile(), DriveFile.MODE_READ_ONLY);
-                                    Log.e(TAG, "File ID: " + mDriveId.encodeToString());
-                                    // [START read_contents]
-                                    openFileTask
-                                            .continueWithTask(new Continuation<DriveContents, Task<Void>>() {
-                                                @Override
-                                                public Task<Void> then(@NonNull Task<DriveContents> task) throws Exception {
-                                                    DriveContents contents = task.getResult();
-                                                    // Process contents...
-                                                    // [START_EXCLUDE]
-                                                    // [START read_as_string]
-                                                    try {
-                                                        BufferedReader input = new BufferedReader(
-                                                                new InputStreamReader(contents.getInputStream()));
-                                                        StringBuilder data = new StringBuilder();
-                                                        String line;
-                                                        while ((line = input.readLine()) != null) {
-                                                            data.append(line).append('\n');
-                                                        }
-
-                                                        try {
-                                                            FileOutputStream output = openFileOutput("Disease_results.csv", Context.MODE_PRIVATE);
-                                                            OutputStreamWriter writer = new OutputStreamWriter(output);
-                                                            writer.write(data.toString());
-                                                            writer.close();
-                                                        } catch (IOException e) {
-                                                            Log.e(TAG, "Failed to download file.");
-                                                        }
-
-                                                    } catch (IOException e) {
-                                                        e.printStackTrace();
+                                Task<DriveContents> openFileTask =
+                                        mDriveResourceClient.openFile(mDriveId.asDriveFile(), DriveFile.MODE_READ_ONLY);
+                                Log.e(TAG, "File ID: " + mDriveId.encodeToString());
+                                // [START read_contents]
+                                openFileTask
+                                        .continueWithTask(new Continuation<DriveContents, Task<Void>>() {
+                                            @Override
+                                            public Task<Void> then(@NonNull Task<DriveContents> task) throws Exception {
+                                                DriveContents contents = task.getResult();
+                                                // Process contents...
+                                                // [START_EXCLUDE]
+                                                // [START read_as_string]
+                                                try {
+                                                    BufferedReader input = new BufferedReader(
+                                                            new InputStreamReader(contents.getInputStream()));
+                                                    StringBuilder data = new StringBuilder();
+                                                    String line;
+                                                    while ((line = input.readLine()) != null) {
+                                                        data.append(line).append('\n');
                                                     }
-                                                    // [END read_as_string]
-                                                    // [START discard_contents]
-                                                    Task<Void> discardTask = mDriveResourceClient.discardContents(contents);
-                                                    // [END discard_contents]
-                                                    return discardTask;
+
+                                                    try {
+                                                        FileOutputStream output = openFileOutput("Disease_results.csv", Context.MODE_PRIVATE);
+                                                        OutputStreamWriter writer = new OutputStreamWriter(output);
+                                                        writer.write(data.toString());
+                                                        writer.close();
+                                                    } catch (IOException e) {
+                                                        Log.e(TAG, "Failed to download file.");
+                                                    }
+
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
                                                 }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    // Handle failure
-                                                    // [START_EXCLUDE]
-                                                    Log.e(TAG, "Unable to read contents", e);
-                                                    finish();
-                                                    // [END_EXCLUDE]
-                                                }
-                                            });
-                                    // [END read_contents]
-                                    Log.e("Drive", "Querying file" + mDriveId.encodeToString());
-                                }
-                            })
-                    .addOnFailureListener(this, new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Handle failure...
-                            Log.e(TAG, "Unable to query", e);
-                        }
-                    });
-            mainIntent.putExtra("ACCOUNT", account);
-            startActivity(menuIntent);
+                                                // [END read_as_string]
+                                                // [START discard_contents]
+                                                Task<Void> discardTask = mDriveResourceClient.discardContents(contents);
+                                                // [END discard_contents]
+                                                return discardTask;
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Handle failure
+                                                // [START_EXCLUDE]
+                                                Log.e(TAG, "Unable to read contents", e);
+                                                finish();
+                                                // [END_EXCLUDE]
+                                            }
+                                        });
+                                // [END read_contents]
+                                Log.e("Drive", "Querying file" + mDriveId.encodeToString());
+                            }
+                        })
+                        .addOnFailureListener(this, new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Handle failure...
+                                Log.e(TAG, "Unable to query", e);
+                            }
+                        });
+            }
+            ProcessIntent.putExtra("ACCOUNT", account);
+            startActivity(ProcessIntent);
         }
     }
 
