@@ -1,0 +1,118 @@
+Disease,Total number of genes tested,Representative Genes,Result,Answer to Risk for,Answer to Consition/Disease,Other
+Breast Cancer,21,"BRCA1,BRCA2,CHEK2,PALB2,PTEN",Negative,Cancer,Breast,Mastectomy
+Colon Caner,14,"APC, AXIN2, EPCAM, MLH1, MLH3, MSH2,",Negative,Cancer,Large Intestine,
+Stomach Cancer,6,"CDH1, MLH1, MSH2, MSH6, PMS2, EPCAM",Negative,Cancer,Stomach,
+Renal Cell Carcinoma,4,"VHL, MET, FH, FLCN",Negative,Cancer,Kidney,
+Prostate cancer,3,"BRCA1,BRCA2,CHEK2",Negative,Cancer,Prostate,
+Multiple Endocrine Neoplasia,3,"CDKN1B, MEN1, RET",Negative,Tumor,Hormonal,
+Thyroid Cancer,2,"NTRK1, RET",Negative,Cancer,Thyroid,
+Parathyroid Carcinoma,2,"CDC73, MEN1",Positive,Cancer,parathyroid glands,
+Neurofibromatosis,2,"NF1,NF2",Negative,Tumor,Genetic ,
+Pheochromocytoma,9,"RET, VHL,MAX,NF1",Negative,Tumor,Autoimmune,
+Paraganglioma,5,"SDHAF2, SDHB, SDHC, SDHD,VHL",Negative,Tumor,Autoimmune,
+Melanoma,2,"CDK4, CDKN2A",Negative,Cancer,Skin,
+Retinoblastoma,1,RB1,Negative,Cancer,Eye,Retina
+Multiple Osteochondroma,2,"EXT1,EXT2",Negative,Tumor,Bone,
+Pancreatic Cancer,2,"BRCA2, PALB2",Negative,Cancer,Pancreas,
+Long QT syndrome,13,"KCNQ1, KCNH2,SCN5A,ANK2,KCNE1,KCNE2, KCNJ2",Negative,Cardiovascular disease,Heart,
+Brugada syndrome,8,"SCN5A,CACNA1C,CACNB2,GPD1L,SCN1B,KCNE3,SC, N3B,HCN4",Negative,Cardiovascular disease,Heart,
+Catecholamine sensitivity polymorphous ventricular tachycardia,2,"RYR2,CASQ2",Negative,Cardiovascular disease,Heart,
+Pre-excitation syndrome,1,PRKAG2,Negative,Cardiovascular disease,Heart,
+Short QT syndrome,5,"KCNH2,KCNJ2,CACNA1C,CACNB2,KCNQ1",Negative,Cardiovascular disease,Heart,
+Sick sinus syndrome,2,"SCN5A,HCN4",Negative,Cardiovascular disease,fibrosis,
+Cardiac conduction disease,1,SCN5A,Negative,Cardiovascular disease,Heart,
+Arrthythmogenic right ventricular cardiomyopathy,8,"DSC2,DSG2,TMEM43,PKP2,DSP,RYR2,JUP,TGFB3",Negative,Cardiovascular disease,Right ventricle,
+Hypertrophic cardiomyopathy,19,"MYH7,MYBPC3,TNNT2, MYH6, LAMP2,PRKAG2,CSRP3,GLA,VCL,TNNC1,TTR,TTN",Negative,Cardiovascular disease,Metabolic,
+Dilated cardiomyopathy,23,"TNNT2,MYH7ABCC9,LMNA,DMD,TAZ,TTN,VCL, ACTC1,TNNI3, LDB3,MYH6,CTF1,DES",Negative,Cardiovascular disease,Metabolic,
+Dilated cardiomyopathy associated with conduction disease,2,"SCN5A,LMNA",Negative,Cardiovascular disease,Metabolic,
+Noncompaction of ventricular myocardium,13,"LDB3,TAZ,MYH7,MYBPC3,ACTC1,TNNT2,SCN5A",Negative,Cardiovascular disease,Metabolic,
+Restrictive cardiomyopathy,6,"MYH7,TNNT2,TNNI3,ACTC1",Negative,Cardiovascular disease,Metabolic,
+Thrombophilia,9,F5?F2?SERPINC1?PROC?PROS1,Negative,Cardiovascular disease,Metabolic,
+Pheochromocytoma,10,"RET, SDHA, SDHB, SDHC, SDHD, NF1, VHL, MAX",Negative,Hormonal disease,tumor,
+Primary hyperaldosteronism,5,"CYP11B1, CYP11B2, KCNK3, KCNK9, KCNJ5",Negative,Hormonal disorder,Metabolic,
+Liddle syndrome,2,"SCNN1B, SCNN1G",Negative,genetic disorder,Metabolic,
+Congenital adrenal hyperplasia,5,"CYP17A1, CYP21A2, HSD3B2, POR, STAR",Negative, autosomal disorder ,Metabolic,
+Cushing's syndrome,5,"PRKAR1A, PDE11A, PDE8B, GNAS, AIP",likely pathogenic carrier,Hormonal disorder,Metabolic,
+Apparent mineralocorticoid excess,1,HSD11B2,Negative, autosomal disorder ,Metabolic,
+Pseudo-hypoaldosteronis m,8,"NR3C2, SCNN1A, SCNNAB, SCNN1G, WNK4",Negative,Hormonal disorder,Metabolic,
+Gitelman syndrome,1,SLC12A3,Negative,Kidney disease,Metabolic,
+Bartters syndrome,5,"SLC12A1, KCNJ1, CLCNKB, BSND, CASR",Negative,Hereditary disease,Metabolic,
+Familial Hypercholesterolemia,4,"APOB, PCSK9, LDLR, LDLRAP1",Negative,Genetic disease,Hereditary,
+Sitosterol Hyperlipidemia,2,"ABCG5, ABCG8",Negative,Cholesterol,Metabolic,
+No ? Hyperlipoproteinemia,1,MTTP,Negative,Cholesterol,Metabolic,
+Chylomicron retention disease,1,SAR1B,Negative,Cholesterol,Metabolic,
+Fish Eye Disease,1,LCAT,Negative,Cholesterol,Metabolic,
+Familial Lecithin Cholesterol Acyltransferase Deficiency Phthalidyl,1,LCAT,Negative,Cholesterol,Metabolic,
+Tangier Disease,1,ABCA1,Negative,Cholesterol,Metabolic,
+Familial Hypertriglyceridemia,3,"LPL, APOA5, APOC2",Negative,Cholesterol,Metabolic,
+?Lipoprotein Abnormalities Hyperlipidemia,1,APOE,Negative,Cholesterol,Metabolic,
+Hepatic Lipase Defect,1,LIPC,Negative,Cholesterol,Metabolic,
+Cholesteryl Ester Transfer Protein Defect,1,CETP,Negative,Cholesterol,Metabolic,
+Late Youth Diabetes,13,"HNF4A, GCK,PDX1,HNF1B,NEUROD1, INS,KCNJ11",Negative,Diabetes,Metabolic,
+Congenital Hyperinsulinsim,11,"ABCC8,KCNJ11,GCK,HADH,INSR,GLUD1",Negative,Diabetes,Metabolic,
+Neonatal Diabetes,18,"ZFP57,PLAGL1,HYMAI,ABCC8,KCNJ11,INS, HNF1B,GCK,PTF1A",Negative,Diabetes,Metabolic,
+Wolcott-Rallison Syndrome,1,EIF2AK3,Negative,Diabetes,Metabolic,
+"Immune Dysfunction/ Multiple Endocrine Disease, Bowel Disease and Chromosome-linked Syndrome",1,FOXP3,Negative,Diabetes,Metabolic,
+Fanconi-Bickel Syndrome,1,SLC2A2,Negative,Diabetes,Metabolic,
+Wolfram Syndrome?diabetes insipidus-Diabetes-Optic atrophy-deafness syndrome?,2,"WFS1,CISD2",Negative,Diabetes,Metabolic,
+"Prader-Willi Syndrome, Happy Puppet Syndrome, Hypotonia-Mental Deterioration-Hypogonadism and Obesity Syndrome",2,"NDN,SNRPN",Negative,Diabetes,Metabolic,
+"Alstrom Syndrome, congenital amaurosis, hereditary congenital retinal disease",1,ALMS1,Negative,Diabetes,Metabolic,
+Hemochromatosis,1,HFE,Negative,Diabetes,Metabolic,
+Lipoatrophy Diabetes and Acromegaly Mandibular Hypoplasia,2,"LMNA,ZMPSTE24",Negative,Diabetes,Metabolic,
+"Congenital Generalized Lipodystrophy, lipoatrophy diabetes",4,"AGPAT2,BSCL2,CAV1,PTRF",Negative,Diabetes,Metabolic,
+Insulin Resistance,5,"AGPAT2,BSCL2,CAV1,PTRF,LMNA",Negative,Diabetes,Metabolic,
+Monogenic obesity,8,"MC4R,LEP,LEPR,POMC,PCSK1,SIM1,MRAP2,FTO",Negative,obesity,Metabolic,
+Bardet-Biedl syndrome,16,"BBS1,BBS2,BBS4,BBS5,MKKS,BBS7,TTC8,BBS9,BBS10",Negative,obesity,Metabolic,
+Alstrom syndrome,1,ALMS1,Negative,obesity,Metabolic,
+Prader-Willi syndrome,2,"NDN,SNRPN",Negative,obesity,Metabolic,
+Cohen syndrome,1,VPS13B,Negative,obesity,Metabolic,
+Retinitis Pigmentosa,60,"CRX,AIPL1,SPATA7,RP1,RP2",Negative,eye disease ,Hereditary,"night vision, side vision"
+Leber’s congenital amaurosis,19,"IQCB1,OTX2,GUCY2D,RPE65",Negative,eye disease ,Hereditary,"vision loss, eye movement(nystagmus), pupil(pupillary response)"
+Conedystrophy,29,"CACNA1F,ABCA4,GUCY2D,PROM1,RPGRIP1",Negative,eye disease ,Hereditary,"color blind, sensitive to light"
+Bardet-Biedl syndrome,18,"ARL6,INPP5E,BBS1,BBS2",Negative,eye disease ,Hereditary,retina
+Usher Syndrome,16,"MYO7A,USH1C,CDH23,PCDH15,USH1G",Negative,eye disease ,Hereditary,deafblindness
+Stargardt Disease,3,"ELOVL4,PROM1,ABCA4",Negative,eye disease ,Hereditary,vision loss
+X-linked retinal tear,1,RS1,Negative,eye disease ,Hereditary,vision loss
+Achromatopsia,8,"CNGA3,CNGB3,GNAT2,PDE6C,PDE6H",Negative,eye disease ,Hereditary,"brain, color blind"
+Congenital starionary night blindness,10,"NYX,GRM6,TRPM1,SLC24A1,GPR179, TRPM1",Negative,eye disease ,Hereditary,"retina, night vision"
+Hermansky-Pudlak Syndrome,8,"HPS1,AP3B1,HPS3,HPS4,HPS5",Negative,eye disease ,Hereditary,"light sensitivity, crossed eyes, eye movement, vision"
+Oculocutaneous albinism,5,"GPR143,TYR,OCA2,TYRP1,SLC45A2",Negative,eye disease ,Hereditary,"light sensitivity, eye movement, vision loss"
+Joubert Syndrome,11,"INPP5E,TMEM216,AHI1,NPHP1,CEP290",Negative,eye disease ,Hereditary,"brain, eye movement"
+Meckel Syndrome,9,"MKS1,CEP290,RPGRIP1L,CC2D2A,NPHP3",Negative,eye disease ,Hereditary,development of eyes
+Microphthalmia,14,"VSX2,CHX10,RAX,GDF6,MFRP, PRSS56",Negative,eye disease ,Hereditary,Eye Disorder
+Corneal Dystrophy,5,"KRT12,KRT3,TGFBI,UBIAD1,VSX1",Negative,eye disease ,Hereditary,Eye Disorder
+Senior-Loken Syndrome,6,"INVS,NPHP1,NPHP4,IQCB1,CEP290",Negative,eye disease ,Hereditary,Kidney disease and eye disorder
+Macular degeneration,19,"BEST1,RPGR,EFEMP1,FSCN2,TIMP3",Negative,eye disease ,Hereditary,Eye Disease
+Optic atrophy,7,"PAX6,OPA1,OPA3,TMEM126A,SOX2",Negative,eye disease ,Hereditary,Optic Nerve Damage
+Waardenburg Syndrome,5,"PAX3,MITF,SNAI2,SOX10,TYR",Negative,eye disease ,Hereditary,Pigmentation
+Other diseases of the retina,17,"1QTNF5,CRB1,CYP4V2,EFEMP1,INPP5E",Negative,eye disease ,Hereditary,
+Congenital nystagmus,3,"FRMD7,GPR143",Negative,eye disease ,Hereditary,Eye Disorder
+Heredopathiaatactica polyneuritis,2,"PHYH,PEX7",Negative,eye disease ,Hereditary,Pigmentary retinal degeneration
+Glaucoma,10,"MYOC,LTBP2,CYP1B1, WDR36",Negative,eye disease ,Hereditary,Eye Disorder
+Cataract,50,"BFSP1,BFSP2,CRYBA4,CRYBB1,CRYBB2",Negative,eye disease ,Hereditary,Eye Disease
+Alzheimer's disease,82,"APOE ?APP?PSEN1?PSEN2?GSTO1, A2M?CTSD?GRN?IDE?LDLR",Negative,Age-related disease,Neurological,Dementia Disease
+Parkinsonism,34,LRRK2(PARK8??PARK2?PARK7?A2M?ATP1A3,Negative,Age-related disease,Neurological,Neurological disorder
+Age-related macular degeneration,57,ARMS2?CFH,Negative,Age-related disease,Neurological,Eye disease
+Frontotemporal dementia,8,GRN?MAPT?CHMP2B?VCP?APOE,Negative,Age-related disease,Neurological,Dementia Disorder
+Autosomal dominant non-syndromic sensorineural hearing loss,29,"COCH, DIAPH3, SIX1, KCNQ4 ,DFNA5",Negative,non-syndromic hearing loss,Hereditary,Hereditary Ear Disease
+Autosomal recessive non-syndromic sensorineural hearing loss,45,"GJB2, SLC26A4, MYO7A, OTOF?PCDH15? MYO15A",Negative,non-syndromic hearing loss,Hereditary,Hereditary Ear Disease
+X-link non-syndromic sensorineural hearing loss,3,"PRPS1, POU3F4, SMPX",Negative,non-syndromic hearing loss,Hereditary,Hereditary Ear Disease
+Dwarfism associated with metabolic disease,54,"PHEX, ENPP1, FGF23, VDR, CYP2R1, GBA",pathogenic carrier,dwarfism,Metabolic,
+Dwarfism associated with autoimmune disease,7,"PSMB8, SMARCAL1, ITCH, LAMTOR2",Negative,dwarfism,Autoimmune,
+Dwarfism associated with internal secretory disease,45,"IYD, DUOXA2, SLC5A5, SHH, SLC29A3",Negative,dwarfism,Hormonal,
+Dwarfism associated with digestive systemic disease,5,"ATP8B1, ABCB11, BUB1B, CCBE1",Negative,dwarfism,Metabolic,
+Dwarfism associated with the skin disease,19,"DKC1,TERT, TINF2, EXT1, TRPS1,LTBP4",Negative,dwarfism,Pigmentosum,
+Dwarfism associated with neuromuscular disease,37,"HCFC1, NSUN2, SHH, SLC9A6, SMS",Negative,dwarfism,Neurological,
+Dwarfism associated with disease ent senses,11,"FANCE, FANCC, FANCA, BCOR, STRA6",Negative,dwarfism,"Ear, Nose, Throat",
+Dwarfism associated with blood disease,19,"ANCE, FANCC, FANCA, FANCG, FANCF, RAD51C, FANCD2, SLX4",Negative,dwarfism,Blood,
+Dwarfism associated with bone disease,130,"COL2A1, COL9A2, COL9A1, SERPINH1, CRTAP",Negative,dwarfism,Blood,
+Other syndrome,153,"SMC1A, NIPBL, SMC3, ADAMTS2, SLC39A13, COL5A2",Negative,dwarfism,Bone,
+multi-system,42,"EDNRB?VPS33B?BBS1?BBSI0?CC2D2A, ERCC8?CDH3, WRN",Negative,Reproductive,Syndrome,neurological disorder
+"Ear, nose, and throat",33,"CDH23, GJB2, MYO7A, TECTA, OTOA, PCDH15, RDX",Negative,Reproductive,"Ear, Nose, Throat",Ear nose throat
+Kidneys and urinary system,23,"ACE, AGTR1, SLC12A1, KCNJ1, COL4A3, CD2AP",Negative,Reproductive,Kidney or Syndrome,
+Immune system,23,"ADA, ATM, AIRE, G6PC3, MEFV, LIG4, RAG1, WAS",Negative,Reproductive,Autoimmune,
+"Food, nutrition, and metabolism",192,"PTS, ACADSB, HMGCL, MCCC1, ACADM, ACADVL, DMP1, OPA3,GNPTAB, GBA",Pathogenic/pathogenic carrier,Reproductive,Metabolic,
+"Skin, hair, and nails",39,"BCS1L, RAB23, RMRP, COL17A1, NOP10, COL1A2, OCA2",Negative,Reproductive,Pigmentosum,
+"Brain and nervous system, bones, muscles, and connective tissues",162,"MTTP, SLC26A2, IGHMBP2,NEFL, KIF7, TREX1, SETX",Negative,Reproductive,Muscular Dystrophy ,
+Eyes and vision,86,"OPA3, ALMS1, BEST1, CYP4V2, RLBP1, ZNF469, PDE6C, CNGB1",Negative,Reproductive,Eye ,
+Blood/lymphatic system,26,"HBA1?HBA2?HBB?UROS?F5?FANCA, BRIP1, F11",Pathogenic/pathogenic carrier,Reproductive,Blood,
