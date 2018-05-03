@@ -1,0 +1,10 @@
+    public void amazon(View view){
+        Intent amazonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.amazon.com"));
+        startActivity(amazonIntent);
+    }
+
+    public void bgibutton(View view){
+        Intent bgiIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.bgi.com"));
+        startActivity(bgiIntent);
+    }
+}
