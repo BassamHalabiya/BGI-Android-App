@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Order">
+
+    <ImageButton
+        android:id="@+id/amazonbutton"
+        android:layout_width="234dp"
+        android:layout_height="79dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="90dp"
+        android:background="@null"
+        android:onClick="amazon"
+        android:scaleType="centerInside"
+        android:src="@mipmap/amazon_logo"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="30dp" />
+
+    <ImageButton
+        android:id="@+id/BGIbutton"
+        android:layout_width="243dp"
+        android:layout_height="118dp"
+        android:layout_above="@+id/amazonbutton"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:adjustViewBounds="false"
+        android:background="@null"
+        android:baselineAlignBottom="false"
+        android:cropToPadding="false"
+        android:onClick="bgibutton"
+        android:scaleType="centerInside"
+        android:src="@mipmap/logo"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="30dp" />
+
+    <TextView
+        android:id="@+id/instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ordertitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:text="&quot;After this, there is no turning back. You take the blue pill—the story ends and you don't get your test results, you wake up in your bed, unaware of the troubles that may be waiting to strike. You take the red pill—you stay in Wonderland, and I reveal your chances of inherting a disease. Remember: all I'm offering is the truth, and those who know it can make right decisions.&quot;\n            -The Matrix &amp; BGI Marketing Team "
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/ordertitle"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Order Page"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageView
+        android:id="@+id/left_background"
+        android:layout_width="241dp"
+        android:layout_height="105dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/left_corner_nanoball" />
+
+    <ImageView
+        android:id="@+id/right_background"
+        android:layout_width="290dp"
+        android:layout_height="85dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/right_corner_nanoball" />
+
+</RelativeLayout>

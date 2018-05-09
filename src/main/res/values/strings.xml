@@ -1,7 +1,31 @@
 <resources>
-    <string name="app_name">BGI App</string>
-    <string name="tap_on_mic">Tap on mic to speak</string>
-    <string name="username">b5b7aa41-3433-475d-b9dc-b50012831800</string>
-    <string name="password">aSqWqIpRq6aU</string>
-    <string name="workspace">197ddddc-a4bf-42a9-a248-9ed9c9785455</string>
+    <string name="app_name">MyGenebox</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_text">Login Page</string>
+    <string name="username_text">Username</string>
+    <string name="password_text">Password</string>
+    <string name="button_login_text">Log In</string>
+    <string name="or_text">or</string>
+    <string name="select_file">Select file</string>
+    <string name="menu_text">MAIN MENU</string>
+    <string name="button_report_text">REPORT</string>
+    <string name="button_order_text">ORDER</string>
+    <string name="button_health_text">HEALTH TIPS</string>
+    <string name="button_mic_text">Type a question..or press to ask</string>
+    <string name="title_activity_report">Report</string>
+    <string name="button_download">Download</string>
+    <string name="highlight_text">Highlights</string>
+    <string name="physical_examination">Based on your results, we advise that you have routine physical examinations for blood pressure, blood glucose, blood lipid, digestive system, cardiovascular system, respiratory system.\n
+    \n</string>
+    <string name="fitness">1. for the best benefits, you should perform 5 hours of moderate intensity aerobic exercise per week\n\n
+2. muscle strengthening activities that involve all major muscle groups is recommended be performed 2 or more days a week\n"
+</string>
+    <string name="diet">1. keep low salt diet or use potassium instead of sodium\n\n
+2. add more whole grains to your diet\n\n
+3. eat less added sugar such as syrups or other sweeteners\n\n
+4. increase the variety of proteins in your diet such as seafood lean meat eggs beans nuts and so on\n\n
+5. eat less saturated fats or trans fats\n\n
+6. vegetables are good for your health, and please try to eat a variety of vegetables\n\n
+7. always eat fresh fruits\n</string>
+
 </resources>

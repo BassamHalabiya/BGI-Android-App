@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
     android:theme="@style/AppTheme.NoActionBar"
-    tools:context="com.example.theodhor.speechapplication.Splash">
+    tools:context=".Splash">
 
     <ImageView
         android:id="@+id/bgi_logo"
