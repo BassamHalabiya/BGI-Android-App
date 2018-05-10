@@ -17,6 +17,7 @@ import android.os.Bundle;
 
 import android.support.v7.widget.CardView;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ public class MainMenu extends AppCompatActivity{
     GridLayout mainGrid;
     Button button_report;
     Button button_question;
+    private static final String TAG = "Menu";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +55,13 @@ public class MainMenu extends AppCompatActivity{
         reportIntent = new Intent("com.example.zzj.speechapplication.Report");
         mainIntent = new Intent("com.example.zzj.speechapplication.MainActivity");
         button_report = (Button) findViewById(R.id.reportbutton);
+        final GoogleSignInAccount account = getIntent().getParcelableExtra("ACCOUNT");
+        final String highlights = getIntent().getStringExtra("HIGHLIGHT");
         button_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoogleSignInAccount account = getIntent().getParcelableExtra("ACCOUNT");
+                reportIntent.putExtra("HIGHLIGHT", highlights);
+                Log.e(TAG, "Highlights: " + highlights);
                 reportIntent.putExtra("ACCOUNT", account);
                 startActivity(reportIntent);
             }

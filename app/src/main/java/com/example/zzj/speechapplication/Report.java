@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -54,13 +55,18 @@ public class Report extends AppCompatActivity {
     protected DriveResourceClient mDriveResourceClient;
     protected DriveId mDriveId;
     private static final String TAG = "Report";
+    TextView highlights_box;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
         download_button = (Button) findViewById(R.id.downloadbutton);
+        highlights_box = findViewById(R.id.highlight_text);
         account = getIntent().getParcelableExtra("ACCOUNT");
+        String highlights = getIntent().getStringExtra("HIGHLIGHT");
+        Log.e(TAG, "Highlights: " + highlights);
+        highlights_box.setText(highlights);
         Log.e(TAG, "Account: " + account.toString());
         mDriveClient = Drive.getDriveClient(getApplicationContext(), account);
         mDriveResourceClient = Drive.getDriveResourceClient(getApplicationContext(), account);

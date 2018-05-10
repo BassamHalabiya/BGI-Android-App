@@ -40,9 +40,16 @@
         android:id="@+id/downloadbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="170dp"
+        android:layout_alignBottom="@+id/txtInfo"
+        android:layout_toEndOf="@+id/txtInfo"
         android:text="@string/button_download" />
+
+    <TextView
+        android:id="@+id/highlight_text"
+        android:layout_width="match_parent"
+        android:layout_height="202dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="155dp" />
 
 </RelativeLayout>
