@@ -15,5 +15,20 @@
     <string name="title_activity_report">Report</string>
     <string name="button_download">Download</string>
     <string name="highlight_text">Highlights</string>
-
+    <string name="order_text">Order Page</string>
+    <string name="pe_text">Physical examination</string>
+    <string name="diet_text">Personalized dietary</string>
+    <string name="fitness_text">Your fitness plan</string>
+    <string name="physical_examination">Based on your results, we advise that you have routine physical examinations for blood pressure, blood glucose, blood lipid, digestive system, cardiovascular system, respiratory system.\n
+    \n</string>
+    <string name="fitness">1. for the best benefits, you should perform 5 hours of moderate intensity aerobic exercise per week\n\n
+2. muscle strengthening activities that involve all major muscle groups is recommended be performed 2 or more days a week\n"
+</string>
+    <string name="diet">1. keep low salt diet or use potassium instead of sodium\n\n
+2. add more whole grains to your diet\n\n
+3. eat less added sugar such as syrups or other sweeteners\n\n
+4. increase the variety of proteins in your diet such as seafood lean meat eggs beans nuts and so on\n\n
+5. eat less saturated fats or trans fats\n\n
+6. vegetables are good for your health, and please try to eat a variety of vegetables\n\n
+7. always eat fresh fruits\n</string>
 </resources>

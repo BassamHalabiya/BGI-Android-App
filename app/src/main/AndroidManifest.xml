@@ -34,6 +34,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".Order">
+            <intent-filter>
+                <action android:name="com.example.zzj.speechapplication.Order" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Health">
+            <intent-filter>
+                <action android:name="com.example.zzj.speechapplication.Health" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".Login">

@@ -220,7 +220,7 @@ public class Login extends AppCompatActivity{
                         finish();
                     }
             });*/
-            File file = new File("Disease_results.csv");
+            File file = getApplicationContext().getFileStreamPath("Disease_results.csv");
             if (!file.exists()) {
                 Query query = new Query.Builder().addFilter(Filters.contains(SearchableField.TITLE, "Disease_results"))
                         .build();
@@ -233,13 +233,13 @@ public class Login extends AppCompatActivity{
                                 // Handle results...
                                 Log.e(TAG, "Number of metadata " + metadataBuffer.getCount());
                                 mDriveId = metadataBuffer.get(0).getDriveId();
-                                        /*try {
-                                            FileOutputStream output = openFileOutput("Disease_results.csv", Context.MODE_PRIVATE);
-                                            driveService.files().get(mDriveId.encodeToString())
-                                                    .executeMediaAndDownloadTo(output);
-                                        } catch (IOException e) {
-                                            Log.e(TAG, "Failed to download file.");
-                                        }*/
+                                    /*try {
+                                        FileOutputStream output = openFileOutput("Disease_results.csv", Context.MODE_PRIVATE);
+                                        driveService.files().get(mDriveId.encodeToString())
+                                                .executeMediaAndDownloadTo(output);
+                                    } catch (IOException e) {
+                                        Log.e(TAG, "Failed to download file.");
+                                    }*/
 
                                 Task<DriveContents> openFileTask =
                                         mDriveResourceClient.openFile(mDriveId.asDriveFile(), DriveFile.MODE_READ_ONLY);

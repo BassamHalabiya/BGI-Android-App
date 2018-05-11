@@ -43,18 +43,32 @@ import java.text.DecimalFormat;
 public class MainMenu extends AppCompatActivity{
     protected Intent mainIntent;
     protected Intent reportIntent;
+    protected Intent orderintent;
+    protected Intent healthintent;
     GridLayout mainGrid;
     Button button_report;
     Button button_question;
+    Button button_order;
+    Button button_health;
+
     private static final String TAG = "Menu";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+
         reportIntent = new Intent("com.example.zzj.speechapplication.Report");
         mainIntent = new Intent("com.example.zzj.speechapplication.MainActivity");
+        orderintent = new Intent("com.example.zzj.speechapplication.Order");
+        healthintent = new Intent("com.example.zzj.speechapplication.Health");
+
+        button_order = (Button) findViewById(R.id.orderbutton);
         button_report = (Button) findViewById(R.id.reportbutton);
+        button_health = (Button) findViewById(R.id.healthtipsbutton);
+        button_question = (Button) findViewById(R.id.questionbutton);
+
         final GoogleSignInAccount account = getIntent().getParcelableExtra("ACCOUNT");
         final String highlights = getIntent().getStringExtra("HIGHLIGHT");
         button_report.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +81,20 @@ public class MainMenu extends AppCompatActivity{
             }
         });
 
-        button_question = (Button) findViewById(R.id.questionbutton);
+        button_health.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(healthintent);
+            }
+        });
+
+        button_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(orderintent);
+            }
+        });
+
 
         button_question.setOnClickListener(new View.OnClickListener() {
             @Override
