@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    tools:context=".Report">
+
+    <ImageView
+        android:id="@+id/left_background"
+        android:layout_width="241dp"
+        android:layout_height="105dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/left_corner_nanoball" />
+
+    <ImageView
+        android:id="@+id/right_background"
+        android:layout_width="290dp"
+        android:layout_height="85dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/right_corner_nanoball" />
+
+    <TextView
+        android:id="@+id/txtInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="@string/highlight_text"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="36sp"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/downloadbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="170dp"
+        android:text="@string/button_download" />
+
+</RelativeLayout>
